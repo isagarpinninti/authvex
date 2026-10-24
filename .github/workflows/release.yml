@@ -1,0 +1,53 @@
+name: Release
+# Push a tag vX.Y.Z (matching the packages' version) to publish @authvex/core, @authvex/react and @authvex/cli.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  id-token: write # npm provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run e2e
+      - run: npm run smoke
+      - name: Check the tag matches the package version
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          for p in core react cli; do
+            actual=$(node -p "require('./packages/$p/package.json').version")
+            [ "$actual" = "$v" ] || { echo "packages/$p is $actual, tag is $v"; exit 1; }
+          done
+      - name: Audit runtime dependencies
+        run: npm audit --omit=dev --audit-level=high
+      - name: Software bill of materials (CycloneDX)
+        run: |
+          mkdir sbom
+          for p in core react cli; do npm sbom --sbom-format cyclonedx --omit dev -w @authvex/$p > sbom/authvex-$p.cdx.json; done
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sbom
+          path: sbom
+      - name: Publish (core, then react and cli, which depend on it)
+        run: |
+          npm publish -w @authvex/core --access public --provenance
+          npm publish -w @authvex/react --access public --provenance
+          npm publish -w @authvex/cli --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

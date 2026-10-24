@@ -1,0 +1,102 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Typecheck, lint, build, unit tests (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22, 24]
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: authvex
+          POSTGRES_PASSWORD: pw-test-123
+          POSTGRES_DB: authvex_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U authvex" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      AUTHVEX_TEST_DATABASE_URL: postgres://authvex:pw-test-123@127.0.0.1:5432/authvex_test
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run interop
+
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Runtime dependencies must have no known high or critical vulnerabilities
+        run: npm audit --omit=dev --audit-level=high
+
+  e2e:
+    name: End-to-end (${{ matrix.browser }}) and smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - run: npm run build
+      - run: npx playwright test --project=${{ matrix.browser }}
+      - run: npm run smoke
+        if: matrix.browser == 'chromium'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: failure()
+        with:
+          name: playwright-traces-${{ matrix.browser }}
+          path: test-results
+
+  bench:
+    name: Performance budgets
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:packages
+      - run: npm run build -w @authvex/cli
+      - run: npm run bench
+        env:
+          # Shared runners are slower than a laptop; the budgets catch a 10x regression, not noise.
+          AUTHVEX_PERF_SCALE: "4"

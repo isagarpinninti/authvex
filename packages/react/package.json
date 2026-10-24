@@ -1,0 +1,65 @@
+{
+  "name": "@authvex/react",
+  "version": "0.1.0",
+  "description": "Embeddable React components for Authvex: a zero-trust login card with passkeys and TOTP, a threat radar workbench, a sessions and passkeys vault, and a tenant RBAC and impersonation studio.",
+  "license": "MIT",
+  "type": "module",
+  "author": {
+    "name": "Sagar Pinninti",
+    "url": "https://github.com/isagarpinninti"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isagarpinninti/authvex.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/isagarpinninti/authvex#readme",
+  "bugs": {
+    "url": "https://github.com/isagarpinninti/authvex/issues"
+  },
+  "keywords": [
+    "react",
+    "authentication",
+    "passkey",
+    "dpop",
+    "rbac",
+    "components"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@authvex/core": "^0.1.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^19.0.0",
+    "zod": "^3.23.0 || ^4.0.0"
+  },
+  "scripts": {
+    "build": "tsup && cp src/styles.css dist/styles.css",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@authvex/cli": "^0.1.0"
+  }
+}

@@ -1,0 +1,28 @@
+# Authvex with PostgreSQL, so several Authvex containers can share sessions. Copy to docker-compose.yml and edit.
+# Run `docker compose run --rm authvex init` once to scaffold ./data, then set "store": {"kind": "postgres"} in data/authvex.config.json.
+# Not tested by the maintainers (no Docker on their machine).
+services:
+  authvex:
+    build: .
+    ports: ["127.0.0.1:4320:4320"]   # put a TLS-terminating proxy in front
+    volumes: ["./data:/data"]
+    environment:
+      AUTHVEX_DATABASE_URL: postgres://authvex:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@db:5432/authvex
+      AUTHVEX_METRICS_TOKEN: ${AUTHVEX_METRICS_TOKEN:-}
+    depends_on:
+      db: { condition: service_healthy }
+    restart: unless-stopped
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: authvex
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: authvex
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U authvex"]
+      interval: 5s
+      retries: 10
+    restart: unless-stopped
+volumes:
+  pgdata:

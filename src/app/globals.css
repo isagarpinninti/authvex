@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --color-bg: var(--av-bg);
+  --color-surface: var(--av-surface);
+  --color-raised: var(--av-raised);
+  --color-line: var(--av-line);
+  --color-line-strong: var(--av-line-strong);
+  --color-ink: var(--av-ink);
+  --color-muted: var(--av-muted);
+  --color-faint: var(--av-faint);
+  --color-amber: var(--av-amber);
+  --color-amber-ink: var(--av-amber-ink);
+  --color-ok: var(--av-ok);
+  --color-ok-ink: var(--av-ok-ink);
+  --color-err: var(--av-err);
+  --color-err-ink: var(--av-err-ink);
+}
+
+html, body { height: 100%; }
+body { margin: 0; background: var(--av-bg); color: var(--av-ink); font-family: var(--font-sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+* { border-color: var(--av-line); scrollbar-width: thin; scrollbar-color: var(--av-line-strong) transparent; }
+::selection { background: color-mix(in srgb, var(--av-amber) 35%, transparent); }
+:focus-visible { outline: 2px solid var(--av-focus); outline-offset: 2px; border-radius: 4px; }
+code, pre { font-family: var(--font-mono); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }

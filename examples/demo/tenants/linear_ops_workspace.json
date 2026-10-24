@@ -1,0 +1,39 @@
+{
+  "id": "linear_ops_workspace",
+  "name": "Linear Ops Workspace",
+  "domain": "linear-ops.test",
+  "requireDpopHardwareBinding": false,
+  "requireMfaForAdmins": false,
+  "maxImpossibleTravelKmh": 900,
+  "maxFailedAttemptsPerWindow": 8,
+  "blockDisposableEmails": false,
+  "sessionTtlSeconds": 900,
+  "refreshTtlSeconds": 604800,
+  "roles": [
+    {
+      "id": "lead",
+      "name": "Lead",
+      "permissions": [
+        "issues:*",
+        "cycles:*",
+        "keys:manage"
+      ]
+    },
+    {
+      "id": "member",
+      "name": "Member",
+      "permissions": [
+        "issues:read",
+        "issues:write",
+        "cycles:read"
+      ]
+    },
+    {
+      "id": "guest",
+      "name": "Guest",
+      "permissions": [
+        "issues:read"
+      ]
+    }
+  ]
+}

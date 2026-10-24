@@ -1,0 +1,62 @@
+{
+  "name": "@authvex/core",
+  "version": "0.1.0",
+  "description": "Zero-dependency identity engine: PBKDF2 password vault, RFC 6238 TOTP, W3C WebAuthn binary parser and verifier, RFC 9449 DPoP hardware-bound sessions, refresh-token family kill-switch, impossible-travel threat gate (AV-101..108), RBAC, scoped API keys and sealed impersonation. Web Crypto only: no jsonwebtoken, bcrypt, otplib or simplewebauthn.",
+  "license": "MIT",
+  "type": "module",
+  "author": {
+    "name": "Sagar Pinninti",
+    "url": "https://github.com/isagarpinninti"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isagarpinninti/authvex.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/isagarpinninti/authvex#readme",
+  "bugs": {
+    "url": "https://github.com/isagarpinninti/authvex/issues"
+  },
+  "keywords": [
+    "authentication",
+    "identity",
+    "passkey",
+    "webauthn",
+    "dpop",
+    "rfc9449",
+    "totp",
+    "rbac",
+    "zero-trust",
+    "self-hosted",
+    "zero-dependency"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "peerDependencies": {
+    "zod": "^3.23.0 || ^4.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run && vitest run -c vitest.zod3.config.ts"
+  },
+  "devDependencies": {
+    "zod3": "npm:zod@^3.25.76"
+  }
+}

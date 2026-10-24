@@ -1,0 +1,48 @@
+{
+  "id": "acme_fintech_prod",
+  "name": "Acme Fintech (production)",
+  "domain": "acme-fintech.test",
+  "requireDpopHardwareBinding": true,
+  "requireMfaForAdmins": true,
+  "maxImpossibleTravelKmh": 900,
+  "maxFailedAttemptsPerWindow": 5,
+  "blockDisposableEmails": true,
+  "sessionTtlSeconds": 900,
+  "refreshTtlSeconds": 604800,
+  "roles": [
+    {
+      "id": "owner",
+      "name": "Owner",
+      "permissions": [
+        "*"
+      ]
+    },
+    {
+      "id": "billing",
+      "name": "Billing",
+      "permissions": [
+        "invoices:read",
+        "invoices:write",
+        "payouts:read"
+      ]
+    },
+    {
+      "id": "analyst",
+      "name": "Analyst",
+      "permissions": [
+        "invoices:read",
+        "payouts:read",
+        "reports:read"
+      ]
+    },
+    {
+      "id": "support",
+      "name": "Support",
+      "permissions": [
+        "invoices:read",
+        "users:read",
+        "users:impersonate"
+      ]
+    }
+  ]
+}

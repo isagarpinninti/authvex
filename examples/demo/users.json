@@ -1,0 +1,89 @@
+[
+  {
+    "id": "usr_ada",
+    "email": "ada@acme-fintech.test",
+    "name": "Ada Lovelace",
+    "emailVerifiedAt": "2026-10-24T11:26:30.498Z",
+    "passwordHash": "$ath-pbkdf2$v=1$iter=210000$01CeoV6sCh0UMq4dDELqoQ$iOZ06mrUGUQvp90wCC-QC8H_VO_6g153OffcnqkFtSc",
+    "totpSecretB32": "MERCIS6K2UQGGSCO4ELLIGNWELBHKR25",
+    "passkeys": [],
+    "orgMemberships": [
+      {
+        "tenantId": "acme_fintech_prod",
+        "roleId": "owner"
+      },
+      {
+        "tenantId": "linear_ops_workspace",
+        "roleId": "lead"
+      }
+    ],
+    "lastLoginGeo": {
+      "lat": 17.385,
+      "lon": 78.4867,
+      "city": "Hyderabad",
+      "ip": "49.37.0.10",
+      "timestampIso": "2026-10-24T11:26:30.498Z"
+    }
+  },
+  {
+    "id": "usr_grace",
+    "email": "grace@acme-fintech.test",
+    "name": "Grace Hopper",
+    "emailVerifiedAt": "2026-10-24T11:26:30.498Z",
+    "passwordHash": "$ath-pbkdf2$v=1$iter=210000$01CeoV6sCh0UMq4dDELqoQ$iOZ06mrUGUQvp90wCC-QC8H_VO_6g153OffcnqkFtSc",
+    "passkeys": [],
+    "orgMemberships": [
+      {
+        "tenantId": "acme_fintech_prod",
+        "roleId": "billing"
+      }
+    ]
+  },
+  {
+    "id": "usr_root",
+    "email": "root@acme-fintech.test",
+    "name": "Support Root",
+    "emailVerifiedAt": "2026-10-24T11:26:30.498Z",
+    "passwordHash": "$ath-pbkdf2$v=1$iter=210000$01CeoV6sCh0UMq4dDELqoQ$iOZ06mrUGUQvp90wCC-QC8H_VO_6g153OffcnqkFtSc",
+    "totpSecretB32": "DS4Y2GXHDMJ7U3UEA644ZDISL42BX5FE",
+    "passkeys": [],
+    "orgMemberships": [
+      {
+        "tenantId": "acme_fintech_prod",
+        "roleId": "support"
+      },
+      {
+        "tenantId": "zetechno_enterprise_sso",
+        "roleId": "admin"
+      }
+    ]
+  },
+  {
+    "id": "usr_linus",
+    "email": "linus@zetechno.test",
+    "name": "Linus Engineer",
+    "emailVerifiedAt": "2026-10-24T11:26:30.498Z",
+    "passwordHash": "$ath-pbkdf2$v=1$iter=210000$01CeoV6sCh0UMq4dDELqoQ$iOZ06mrUGUQvp90wCC-QC8H_VO_6g153OffcnqkFtSc",
+    "passkeys": [],
+    "orgMemberships": [
+      {
+        "tenantId": "zetechno_enterprise_sso",
+        "roleId": "engineer"
+      }
+    ]
+  },
+  {
+    "id": "usr_margaret",
+    "email": "margaret@linear-ops.test",
+    "name": "Margaret Member",
+    "emailVerifiedAt": "2026-10-24T11:26:30.498Z",
+    "passwordHash": "$ath-pbkdf2$v=1$iter=210000$01CeoV6sCh0UMq4dDELqoQ$iOZ06mrUGUQvp90wCC-QC8H_VO_6g153OffcnqkFtSc",
+    "passkeys": [],
+    "orgMemberships": [
+      {
+        "tenantId": "linear_ops_workspace",
+        "roleId": "member"
+      }
+    ]
+  }
+]

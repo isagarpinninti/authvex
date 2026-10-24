@@ -1,0 +1,58 @@
+{
+  "name": "@authvex/cli",
+  "version": "0.1.0",
+  "description": "Run a self-hosted Authvex identity server: login with passkeys, TOTP and DPoP-bound sessions, refresh-family kill-switch, threat gate, RBAC, scoped API keys, sealed impersonation, a hash-chained audit ledger and the Studio.",
+  "license": "MIT",
+  "type": "module",
+  "author": {
+    "name": "Sagar Pinninti",
+    "url": "https://github.com/isagarpinninti"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isagarpinninti/authvex.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/isagarpinninti/authvex#readme",
+  "bugs": {
+    "url": "https://github.com/isagarpinninti/authvex/issues"
+  },
+  "keywords": [
+    "authentication",
+    "identity",
+    "passkey",
+    "dpop",
+    "cli",
+    "self-hosted",
+    "zero-trust"
+  ],
+  "bin": {
+    "authvex": "dist/bin.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "studio",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@authvex/core": "^0.1.0",
+    "zod": "^4.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  }
+}

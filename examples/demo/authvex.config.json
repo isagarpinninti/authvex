@@ -1,0 +1,14 @@
+{
+  "port": 4320,
+  "host": "127.0.0.1",
+  "rpId": "localhost",
+  "origins": [],
+  "tenants": "tenants",
+  "users": "users.json",
+  "ledger": true,
+  "trustClientGeo": false,
+  "trustGeoHeaders": false,
+  "store": {
+    "kind": "file"
+  }
+}

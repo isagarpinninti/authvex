@@ -1,0 +1,41 @@
+{
+  "id": "zetechno_enterprise_sso",
+  "name": "Zetechno Enterprise",
+  "domain": "zetechno.test",
+  "requireDpopHardwareBinding": false,
+  "requireMfaForAdmins": true,
+  "maxImpossibleTravelKmh": 1200,
+  "maxFailedAttemptsPerWindow": 4,
+  "blockDisposableEmails": true,
+  "sessionTtlSeconds": 1800,
+  "refreshTtlSeconds": 1209600,
+  "roles": [
+    {
+      "id": "admin",
+      "name": "Admin",
+      "permissions": [
+        "tenant:admin",
+        "users:*",
+        "keys:manage",
+        "sso:configure"
+      ]
+    },
+    {
+      "id": "engineer",
+      "name": "Engineer",
+      "permissions": [
+        "deployments:read",
+        "deployments:trigger",
+        "logs:read"
+      ]
+    },
+    {
+      "id": "auditor",
+      "name": "Auditor",
+      "permissions": [
+        "logs:read",
+        "reports:read"
+      ]
+    }
+  ]
+}
