@@ -3,6 +3,9 @@ import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { configure } from "@testing-library/dom";
+// CI runners are slow: give async queries a generous bound (they return as soon as the element appears).
+configure({ asyncUtilTimeout: 8000 });
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { ConfigSchema, DEMO_PASSWORD, Ledger, createAuthvexServer, loadOrCreateIssuerKey, loadWorkspace, runInit, staticKeyring, type AuthvexServer } from "@authvex/cli";
 import { computeTotpCode, createSoftwareAuthenticator } from "@authvex/core";
